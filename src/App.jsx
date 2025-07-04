@@ -23,7 +23,7 @@ const portfolioItemsData = [
     { id: 11, category: 'projects', title: 'Sales Data Analysis', description: 'Analyzed 10,000+ rows of sales data with Python (Pandas, NumPy) to improve data quality by 25%.' },
     { id: 12, category: 'projects', title: 'Process Scheduling Simulation', description: 'Implemented FCFS and SJF algorithms in Python for CPU process management simulation, reducing wait time by up to 40%.' },
     // Certificates
-    { id: 13, category: 'certificates', image: 'serfifikat kpk.png', title: 'Student Integrity Enhancement', link: '#' },
+    { id: 13, category: 'certificates', image: 'serfifikat diklat kpk.png', title: 'Student Integrity Enhancement', link: '#' },
     { id: 14, category: 'certificates', image: 'https://placehold.co/600x420/221932/9882B9?text=Sertifikat+Lain', title: 'Other Certificate', link: '#' },
     // Trainings
     { id: 15, category: 'trainings', image: 'sertifikat p3h.png', title: 'Halal Product Process Assistance Training', link: '#' },
