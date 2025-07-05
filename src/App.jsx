@@ -18,13 +18,15 @@ const portfolioItemsData = [
     { id: 7, category: 'tech', icon: <Monitor size={56} className="text-accent"/>, title: 'VS Code' },
     { id: 8, category: 'tech', icon: <BarChart2 size={56} className="text-accent"/>, title: 'Pandas & NumPy' },
     // Projects
-    { id: 9, category: 'projects', title: 'Network Vulnerability Analysis', description: 'Used Nmap and Wireshark to identify 5+ network vulnerabilities and analyze traffic to detect threats.' },
-    { id: 10, category: 'projects', title: 'Online Bookstore Database', description: 'Designed and implemented a relational database (10+ tables) in MySQL with 3NF normalization for data integrity.' },
-    { id: 11, category: 'projects', title: 'Sales Data Analysis', description: 'Analyzed 10,000+ rows of sales data with Python (Pandas, NumPy) to improve data quality by 25%.' },
-    { id: 12, category: 'projects', title: 'Process Scheduling Simulation', description: 'Implemented FCFS and SJF algorithms in Python for CPU process management simulation, reducing wait time by up to 40%.' },
-    // Certificates
-    { id: 13, category: 'certificates', image: 'serfifikat diklat kpk.png', title: 'Student Integrity Enhancement', link: '#' },
-    { id: 14, category: 'certificates', image: 'https://placehold.co/600x420/221932/9882B9?text=Sertifikat+Lain', title: 'Other Certificate', link: '#' },
+    // Keeping only the 'Warcoff' project as requested
+    {
+        id: 17,
+        category: 'projects',
+        title: 'Warcoff',
+        description: 'Warcoff adalah aplikasi web inovatif untuk warkop digital. Aplikasi ini mempermudah pengelolaan menu, pesanan, dan pembayaran dengan antarmuka yang minimalis dan intuitif, mengoptimalkan alur kerja, mengurangi kesalahan, dan meningkatkan efisiensi layanan.',
+        image: 'warcoff.png', // Using the uploaded image
+        demoLink: 'https://www.youtube.com/watch?v=your-youtube-video-id' // Placeholder YouTube URL
+    },
     // Trainings
     { id: 15, category: 'trainings', image: 'sertifikat p3h.png', title: 'Halal Product Process Assistance Training', link: '#' },
     { id: 16, category: 'trainings', image: 'sertifikat lkmm TD.png', title: 'LKMM-TD HMIT V', link: '#' },
@@ -135,9 +137,9 @@ const HomeSection = () => {
                         <div className="floating-icon absolute bottom-10 -right-2 w-16 h-16 bg-[#221932] rounded-full flex items-center justify-center shadow-lg" style={{animationDelay: '0.8s'}}>
                             <ShieldCheck size={36} style={{color: '#775E88'}}/>
                         </div>
-                         <div className="floating-icon absolute bottom-0 -left-10 w-16 h-16 bg-[#221932] rounded-full flex items-center justify-center shadow-lg" style={{animationDelay: '1s'}}>
-                            <Network size={36} className="text-accent"/>
-                        </div>
+                           <div className="floating-icon absolute bottom-0 -left-10 w-16 h-16 bg-[#221932] rounded-full flex items-center justify-center shadow-lg" style={{animationDelay: '1s'}}>
+                                <Network size={36} className="text-accent"/>
+                           </div>
                     </div>
                 </div>
             </div>
@@ -207,8 +209,9 @@ const AboutSection = () => (
 
 // --- Komponen Portfolio ---
 const PortfolioSection = () => {
+    // Removed 'certificates' from filters
     const [activeFilter, setActiveFilter] = useState('projects');
-    const filters = ['projects', 'tech', 'certificates', 'trainings'];
+    const filters = ['projects', 'tech', 'trainings'];
 
     const filteredItems = portfolioItemsData.filter(item => item.category === activeFilter);
 
@@ -216,7 +219,7 @@ const PortfolioSection = () => {
         <section id="portfolio" className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-8 md:px-16 lg:px-24 py-20">
             <h2 className="text-4xl font-bold mb-4 text-center text-white">My <span className="text-accent">Portfolio</span></h2>
             <p className="text-gray-300 mb-12 text-center max-w-2xl">Explore my work, certifications, and the technologies & trainings I've attended — all in one place.</p>
-           
+            
             <div className="flex flex-wrap justify-center items-center gap-4 mb-12">
                 {filters.map(filter => (
                     <button key={filter} onClick={() => setActiveFilter(filter)}
@@ -225,22 +228,34 @@ const PortfolioSection = () => {
                     </button>
                 ))}
             </div>
-           
+            
             <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {filteredItems.map(item => (
                     <div key={item.id} className="portfolio-item bg-[#221932] rounded-lg transition-transform hover:-translate-y-2"
-                         style={{ gridColumn: (item.category === 'projects' || item.category === 'certificates' || item.category === 'trainings') ? 'span 1 / span 2' : 'span 1' }}>
+                            style={{ gridColumn: (item.category === 'projects' || item.category === 'trainings') ? 'span 1 / span 2' : 'span 1' }}>
                         {item.category === 'tech' ? (
                             <div className="p-6 flex flex-col items-center justify-center space-y-3 h-full">
                                 {item.icon}
                                 <h3 className="font-semibold text-lg text-white">{item.title}</h3>
                             </div>
                         ) : item.category === 'projects' ? (
-                            <div className="p-6 h-full flex flex-col text-center">
-                                <h3 className="text-xl font-bold mb-2 text-white">{item.title}</h3>
-                                <p className="text-gray-400 text-sm flex-grow">{item.description}</p>
+                            <div className="overflow-hidden group h-full">
+                                <div className="relative h-full">
+                                    {item.image && (
+                                        <img src={item.image} alt={item.title} className="w-full h-48 object-cover transition-transform group-hover:scale-105"/>
+                                    )}
+                                    <div className="p-4 flex flex-col text-center">
+                                        <h3 className="text-xl font-bold mb-2 text-white">{item.title}</h3>
+                                        <p className="text-gray-400 text-sm flex-grow mb-4">{item.description}</p>
+                                        {item.demoLink && (
+                                            <a href={item.demoLink} target="_blank" rel="noopener noreferrer" className="btn inline-flex items-center justify-center gap-2 bg-accent text-[#060407] font-semibold px-4 py-2 rounded-lg hover:bg-accent-dark transition-colors">
+                                                Demo <ChevronRight size={16}/>
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                        ) : (
+                        ) : ( // For 'trainings'
                             <div className="overflow-hidden group h-full">
                                 <div className="relative h-full">
                                     <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform group-hover:scale-105"/>
@@ -418,7 +433,7 @@ export default function App() {
             document.body.appendChild(script);
             return script;
         };
-       
+        
         const scrollRevealScript = loadScript('https://unpkg.com/scrollreveal', () => {
             loadScript('https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js', () => {
                 setScriptsLoaded(true); 
